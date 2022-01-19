@@ -18,7 +18,7 @@ import BlockHandler from './socket/Block.Handler';
 const PORT = process.env.PORT || 4000;
 
 const server = app.listen(process.env.PORT, () => {
-  logger.info(`🚀 Server is up and running at http://${HOST}:${PORT}`);
+  logger.info(`🚀 Server is up and running at http://${PORT}`);
 });
 
 const io = new Server(server, {
