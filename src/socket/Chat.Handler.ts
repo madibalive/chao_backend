@@ -12,7 +12,7 @@ const chatHandler = (io: Server, socket: Socket): void => {
       if (blockedByRecipientOrSender.length > 1) return;
 
       let data = await database('messages').insert(message).returning('*');
-      data = await database('messages').where({ id: data[0] });
+      // data = await database('messages').where({ id: data[0] });
       if (data.length > 0) {
         socket.to(message.to).emit(MessageEvent.MESSAGE, data[0]);
         socket.broadcast.to(message.from).emit(MessageEvent.MESSAGE, data[0]);
@@ -23,15 +23,12 @@ const chatHandler = (io: Server, socket: Socket): void => {
     }
   };
 
-  const selectedUserMessages = async (selectedUser: User) => {
+  const activeUserMessages = async (selectedUser: User) => {
     try {
-      console.log('selected user messages -- ', selectedUser);
       // @ts-ignore
       const currentUser = socket.request.user;
-      const msgParticipants = [currentUser.email, selectedUser.email];
-
-      const messages = await database('messages').whereIn('from', msgParticipants).orWhere('to', selectedUser.email);
-
+      const users = [currentUser.email, selectedUser.email];
+      const messages = await database('messages').whereIn('from', users).orWhere('to', selectedUser.email);
       io.in(currentUser.email).emit(MessageEvent.ACTIVE_USER_MESSAGES, messages);
     } catch (error) {}
   };
@@ -45,7 +42,7 @@ const chatHandler = (io: Server, socket: Socket): void => {
   //   };
 
   socket.on(MessageEvent.MESSAGE, chatMessage);
-  socket.on(MessageEvent.ACTIVE_USER_MESSAGES, selectedUserMessages);
+  socket.on(MessageEvent.ACTIVE_USER_MESSAGES, activeUserMessages);
   //   socket.on(ChatEvent.STARTED_TYPING, startedTyping);
   //   socket.on(ChatEvent.FINISHED_TYPING, finishedTyping);
 };

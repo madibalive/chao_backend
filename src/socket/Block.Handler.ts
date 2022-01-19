@@ -11,7 +11,7 @@ const BlockHandler = (io: Server, socket: Socket): void => {
       let data = await database('blocks').where('to', blockedUser.email).orWhere('from', currentUser.email);
 
       if (data.length > 0) return;
-      const [id] = await database('blocks')
+      const [created] = await database('blocks')
         .insert({
           to: blockedUser.email,
           from: currentUser.email,
@@ -23,7 +23,9 @@ const BlockHandler = (io: Server, socket: Socket): void => {
         ...blockedUser,
         isBlockedByUser: true,
       });
-    } catch (error) {}
+    } catch (error) {
+      console.log('error -- ', error);
+    }
   };
 
   const handleUnBlockUser = async (unBlockedUser: any, acknowlementFunc: Function) => {
@@ -36,13 +38,11 @@ const BlockHandler = (io: Server, socket: Socket): void => {
       if (data.length < 1) return;
 
       const removed = await database('blocks').where({ id: data[0].id }).del();
-
+      io.in(unBlockedUser.email).emit(UsersEvent.UN_BLOCKED, { ...currentUser, isBlocked: false });
       io.in(currentUser.email).emit(UsersEvent.UN_BLOCKED, {
         ...unBlockedUser,
         isBlockedByUser: false,
       });
-
-      io.in(unBlockedUser.email).emit(UsersEvent.UN_BLOCKED, { ...currentUser, isBlocked: false });
     } catch (error) {}
   };
 

@@ -7,33 +7,33 @@ interface IKnexConfig {
 }
 
 const configs: IKnexConfig = {
-  // development: {
-  //   client: 'postgresql',
-  //   connection: {
-  //     host: env.string('DB_DEV_HOST', 'localhost'),
-  //     port: env.number('DB_DEV_PORT', 5432),
-  //     database: env.string('DB_DEV_DATABASE', 'template'),
-  //     user: env.string('DB_DEV_USER', 'postgres'),
-  //     password: env.string('DB_DEV_PASS', 'root'),
-  //   },
-  //   pool: {
-  //     min: 2,
-  //     max: 10,
-  //   },
-  //   migrations: {
-  //     tableName: 'knex_migrations',
-  //   },
-  // },
   development: {
-    client: 'sqlite3',
+    client: 'postgresql',
     connection: {
-      filename: path.join(__dirname, 'db.sqlite3'),
+      host: env.string('DB_DEV_HOST', 'localhost'),
+      port: env.number('DB_DEV_PORT', 5432),
+      database: env.string('DB_DEV_DATABASE', 'chao'),
+      user: env.string('DB_DEV_USER', 'postgres'),
+      password: env.string('DB_DEV_PASS', ''),
+    },
+    pool: {
+      min: 2,
+      max: 10,
     },
     migrations: {
       tableName: 'knex_migrations',
     },
-    useNullAsDefault: true,
   },
+  // development: {
+  //   client: 'sqlite3',
+  //   connection: {
+  //     filename: path.join(__dirname, 'db.sqlite3'),
+  //   },
+  //   migrations: {
+  //     tableName: 'knex_migrations',
+  //   },
+  //   useNullAsDefault: true,
+  // },
   test: {
     client: 'postgresql',
     connection: {

@@ -1,7 +1,8 @@
 import Redis from 'ioredis';
 
 // For connection details check-out https://github.com/luin/ioredis#connect-to-redis
-const client = new Redis(); // Connect to 127.0.0.1:6379
+const client = new Redis(6379, '127.0.0.1'); // 192.168.1.1:6379
+
 client.on('connect', (): void => console.log('Connected'));
 
 client.on('error', (e: any): void => console.log(`Redis error: ${e}`));

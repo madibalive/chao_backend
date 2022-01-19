@@ -8,7 +8,7 @@ export const up = async (knex: Knex): Promise<void> => {
     table.string('to').notNullable();
     table.string('content').nullable().defaultTo('');
     table.boolean('confirmed').defaultTo(false);
-    table.date('localDate').nullable().defaultTo(new Date());
+    table.string('localDate').nullable();
     table.timestamps(true, true);
     // table.foreign('role').references('name').inTable('roles');
   });
