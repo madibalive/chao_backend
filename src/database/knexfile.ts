@@ -20,7 +20,7 @@ const configs: IKnexConfig = {
       port: 5432,
       database: 'd97ppci557sp5o',
       user: 'nokjjuzwdavqlx',
-      password: '03414f761fa3b9567388a5554807cbcc3fa23edf90ece4f69b364cb92a3000a4      ',
+      password: '03414f761fa3b9567388a5554807cbcc3fa23edf90ece4f69b364cb92a3000a4',
     },
 
     pool: {
@@ -61,7 +61,7 @@ const configs: IKnexConfig = {
       port: 5432,
       database: 'd97ppci557sp5o',
       user: 'nokjjuzwdavqlx',
-      password: '03414f761fa3b9567388a5554807cbcc3fa23edf90ece4f69b364cb92a3000a4      ',
+      password: '03414f761fa3b9567388a5554807cbcc3fa23edf90ece4f69b364cb92a3000a4',
     },
     pool: {
       min: 2,
