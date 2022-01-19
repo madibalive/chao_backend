@@ -10,7 +10,7 @@ import { env } from './helpers/env-helper';
 
 import { app } from './app';
 import { logger } from './helpers/logger';
-// import { pubClient, subClient } from './helpers/cache';
+import { pubClient, subClient } from './helpers/cache';
 import { ioMiddleware } from './middlewares/ioMiddleware';
 import ConnectionHandler from './socket/Connection.Handler';
 import chatHandler from './socket/Chat.Handler';
@@ -21,13 +21,13 @@ type SocketNextFunc = (err?: ExtendedError | undefined) => void;
 const HOST = env.string('SERVER_HOST', 'localhost');
 // const PORT = env.number('SERVER_PORT', 5000);
 const PORT = process.env.PORT || 4000;
-
-const server = app.listen(PORT as number, HOST, () => {
+// @ts-ignore
+const server = app.listen(PORT, () => {
   logger.info(`🚀 Server is up and running at http://${HOST}:${PORT}`);
 });
 
 const io = new Server(server, {
-  // adapter: createAdapter(pubClient, subClient),
+  adapter: createAdapter(pubClient, subClient),
   cors: {
     origin: '*',
   },
