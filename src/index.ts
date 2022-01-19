@@ -38,7 +38,11 @@ const adaptSocketToExpressMiddleWares = (middleware: Function) => (socket: Socke
 io.use(adaptSocketToExpressMiddleWares(getAuthenticatedUserDetails));
 
 io.on('connection', async function (socket) {
-  await ConnectionHandler(io, socket);
-  chatHandler(io, socket);
-  BlockHandler(io, socket);
+  try {
+    await ConnectionHandler(io, socket);
+    chatHandler(io, socket);
+    BlockHandler(io, socket);
+  } catch (error) {
+    console.log(error);
+  }
 });
