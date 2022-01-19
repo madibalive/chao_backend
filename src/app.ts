@@ -20,8 +20,10 @@ app.use(apiLogger);
 
 // Routes
 app.get('/', (req: express.Request, res: express.Response) => {
+  console.log('Hello World');
   return res.status(200).send({ message: 'HelloWorld' });
 });
+
 app.use('/public', express.static('public/'));
 
 /*

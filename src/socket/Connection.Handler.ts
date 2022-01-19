@@ -3,8 +3,8 @@ import { SocketEvent, UsersEvent } from '../@types';
 import { database } from '../database/db';
 
 const ConnectionHandler = async (io: Server, socket: Socket) => {
-  // @ts-ignore
   try {
+    // @ts-ignore
     const currentUser = socket.request.user;
     console.log('new user connected -- ', currentUser.email);
     socket.broadcast.emit(UsersEvent.NEW_USER, currentUser);
