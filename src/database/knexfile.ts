@@ -10,11 +10,14 @@ const configs: IKnexConfig = {
   development: {
     client: 'postgresql',
     connection: {
-      host: env.string('DB_DEV_HOST', 'localhost'),
+      host: env.string('DB_DEV_HOST', 'ec2-3-225-41-234.compute-1.amazonaws.com'),
       port: env.number('DB_DEV_PORT', 5432),
-      database: env.string('DB_DEV_DATABASE', 'chao'),
-      user: env.string('DB_DEV_USER', 'postgres'),
-      password: env.string('DB_DEV_PASS', ''),
+      database: env.string('DB_DEV_DATABASE', 'd97ppci557sp5o'),
+      user: env.string('DB_DEV_USER', 'nokjjuzwdavqlx'),
+      password: env.string('DB_DEV_PASS', '03414f761fa3b9567388a5554807cbcc3fa23edf90ece4f69b364cb92a3000a4'),
+      ssl: {
+        rejectUnauthorized: false,
+      },
     },
     pool: {
       min: 2,
@@ -54,11 +57,14 @@ const configs: IKnexConfig = {
   production: {
     client: 'postgresql',
     connection: {
-      host: env.string('DB_PROD_HOST', 'localhost'),
-      port: env.number('DB_PROD_PORT', 5432),
-      database: env.string('DB_PROD_DATABASE', 'template'),
-      user: env.string('DB_PROD_USER', 'username'),
-      password: env.string('DB_PROD_PASS', 'password'),
+      host: env.string('DB_DEV_HOST', 'ec2-3-225-41-234.compute-1.amazonaws.com'),
+      port: env.number('DB_DEV_PORT', 5432),
+      database: env.string('DB_DEV_DATABASE', 'd97ppci557sp5o'),
+      user: env.string('DB_DEV_USER', 'nokjjuzwdavqlx'),
+      password: env.string('DB_DEV_PASS', '03414f761fa3b9567388a5554807cbcc3fa23edf90ece4f69b364cb92a3000a4'),
+      ssl: {
+        rejectUnauthorized: false,
+      },
     },
     pool: {
       min: 2,
