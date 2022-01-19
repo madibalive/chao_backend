@@ -4,10 +4,9 @@
   "description": "NodeJS, Express typescript backend for chao-talk",
   "main": "build/app.js",
   "scripts": {
-    "heroku-postbuild": "npm run build",
     "build": "tsc",
-    "start": "node build/index.js",
-    "start:dev": "nodemon",
+    "start:dev": "node build/index.js",
+    "start": "nodemon",
     "start:dev-legacy": "nodemon -L",
     "knex": "./node_modules/.bin/knex --knexfile src/database/knexfile.ts",
     "knex:migrate": "./node_modules/.bin/knex --knexfile src/database/knexfile.ts migrate:latest",
