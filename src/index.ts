@@ -49,8 +49,8 @@ function ConnectIo(server: any) {
 
   // io.use(ioMiddleware);
 
-  io.on('connection', async function (socket) {
-    await ConnectionHandler(io, socket);
+  io.on('connection', function (socket) {
+    ConnectionHandler(io, socket);
     chatHandler(io, socket);
     BlockHandler(io, socket);
   });

@@ -2,7 +2,7 @@ import { Socket, Server } from 'socket.io';
 import { SocketEvent, UsersEvent } from '../@types';
 import { database } from '../database/db';
 
-const ConnectionHandler = async (io: Server, socket: Socket) => {
+const ConnectionHandler = (io: Server, socket: Socket) => {
   try {
     // @ts-ignore
     const currentUser = socket.request.user;
@@ -15,8 +15,8 @@ const ConnectionHandler = async (io: Server, socket: Socket) => {
     let blockFromList: any[] = [];
     let currenUserBlocks: any[] = [];
 
-    blockFromList = await database('blocks').where('to', currentUser.email);
-    currenUserBlocks = await database('blocks').where('from', currentUser.email);
+    // blockFromList = await database('blocks').where('to', currentUser.email);
+    // currenUserBlocks = await database('blocks').where('from', currentUser.email);
     blockFromList = blockFromList.map((each) => each.from);
     currenUserBlocks = currenUserBlocks.map((each) => each.to);
 
