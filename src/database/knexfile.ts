@@ -56,27 +56,27 @@ const configs: IKnexConfig = {
       tableName: 'knex_migrations',
     },
   },
-  production: {
-    client: 'postgresql',
-    connection: connectSetting,
-    pool: {
-      min: 2,
-      max: 10,
-    },
-    migrations: {
-      tableName: 'knex_migrations',
-    },
-  },
   // production: {
-  //   client: 'sqlite3',
-  //   connection: {
-  //     filename: path.join(__dirname, 'db.sqlite3'),
+  //   client: 'postgresql',
+  //   connection: connectSetting,
+  //   pool: {
+  //     min: 2,
+  //     max: 10,
   //   },
   //   migrations: {
   //     tableName: 'knex_migrations',
   //   },
-  //   useNullAsDefault: true,
   // },
+  production: {
+    client: 'sqlite3',
+    connection: {
+      filename: path.join(__dirname, 'db.sqlite3'),
+    },
+    migrations: {
+      tableName: 'knex_migrations',
+    },
+    useNullAsDefault: true,
+  },
 };
 
 /*
