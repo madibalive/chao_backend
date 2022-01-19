@@ -7,9 +7,8 @@ const ConnectionHandler = async (io: Server, socket: Socket) => {
     // @ts-ignore
     const currentUser = socket.request.user;
     console.log('new user connected -- ', currentUser.email);
-    socket.broadcast.emit(UsersEvent.NEW_USER, {});
-
     socket.join(currentUser.email);
+    socket.broadcast.emit(UsersEvent.NEW_USER, { currentUser });
 
     const users = [];
 
@@ -34,17 +33,15 @@ const ConnectionHandler = async (io: Server, socket: Socket) => {
 
     socket.emit(UsersEvent.ACTIVE_USERS, users);
 
-    const disconnect = async () => {
+    const onDisconnect = async () => {
       // @ts-ignore
       const currentUser = socket.request.user;
       console.log('disconnecting ', currentUser.email);
-
-      const matchingSockets = await io.in(currentUser.email).allSockets();
-      const isDisconnected = matchingSockets.size === 0;
-      if (isDisconnected) socket.broadcast.emit(SocketEvent.DISCONNECTED, currentUser);
+      const getSockets = await io.in(currentUser.email).allSockets();
+      if (getSockets.size === 0) socket.broadcast.emit(SocketEvent.DISCONNECTED, currentUser);
     };
 
-    socket.on('disconnect', disconnect);
+    socket.on('disconnect', onDisconnect);
   } catch (error) {
     console.log(error);
   }

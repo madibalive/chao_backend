@@ -11,6 +11,7 @@ import { ioMiddleware } from './middlewares/ioMiddleware';
 import ConnectionHandler from './socket/Connection.Handler';
 import chatHandler from './socket/Chat.Handler';
 import BlockHandler from './socket/Block.Handler';
+import UsersHandler from './socket/Users.Handler';
 
 type SocketNextFunc = (err?: ExtendedError | undefined) => void;
 
@@ -34,5 +35,6 @@ io.use(ioMiddleware);
 io.on('connection', function (socket) {
   ConnectionHandler(io, socket);
   chatHandler(io, socket);
+  UsersHandler(io, socket);
   BlockHandler(io, socket);
 });

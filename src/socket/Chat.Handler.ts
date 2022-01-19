@@ -24,12 +24,12 @@ const chatHandler = (io: Server, socket: Socket): void => {
     }
   };
 
-  const onFetchMessages = async (selectedUser: User) => {
+  const onFetchMessages = async (activeUser: User) => {
     try {
       // @ts-ignore
       const currentUser = socket.request.user;
-      const users = [currentUser.email, selectedUser.email];
-      const messages = await database('messages').whereIn('from', users).orWhere('to', selectedUser.email);
+      const users = [currentUser.email, activeUser.email];
+      const messages = await database('messages').whereIn('from', users).orWhere('to', activeUser.email);
       io.in(currentUser.email).emit(MessageEvent.ACTIVE_USER_MESSAGES, messages);
     } catch (error) {}
   };
