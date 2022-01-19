@@ -7,19 +7,15 @@ interface IKnexConfig {
 
 const configs: IKnexConfig = {
   development: {
-    client: 'postgresql',
-    connection:
-      process.env.DATABASE_URL ||
-      'postgres://nokjjuzwdavqlx:03414f761fa3b9567388a5554807cbcc3fa23edf90ece4f69b364cb92a3000a4@ec2-3-225-41-234.compute-1.amazonaws.com:5432/d97ppci557sp5o',
-    ssl: {
-      rejectUnauthorized: false,
-    },
-    pool: {
-      min: 2,
-      max: 10,
-    },
-    migrations: {
-      tableName: 'knex_migrations',
+    development: {
+      client: 'sqlite3',
+      connection: {
+        filename: path.join(__dirname, 'db.sqlite3'),
+      },
+      migrations: {
+        tableName: 'knex_migrations',
+      },
+      useNullAsDefault: true,
     },
   },
   test: {
@@ -40,18 +36,15 @@ const configs: IKnexConfig = {
     },
   },
   production: {
-    client: 'postgresql',
-    connection:
-      process.env.DATABASE_URL ||
-      'postgres://nokjjuzwdavqlx:03414f761fa3b9567388a5554807cbcc3fa23edf90ece4f69b364cb92a3000a4@ec2-3-225-41-234.compute-1.amazonaws.com:5432/d97ppci557sp5o',
-
-    ssl: { rejectUnauthorized: false },
-    pool: {
-      min: 2,
-      max: 10,
-    },
-    migrations: {
-      tableName: 'knex_migrations',
+    development: {
+      client: 'sqlite3',
+      connection: {
+        filename: path.join(__dirname, 'db.sqlite3'),
+      },
+      migrations: {
+        tableName: 'knex_migrations',
+      },
+      useNullAsDefault: true,
     },
   },
 };
