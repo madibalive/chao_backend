@@ -2,7 +2,7 @@ import { Socket, Server } from 'socket.io';
 import { SocketEvent, UsersEvent } from '../@types';
 import { database } from '../database/db';
 
-const ConnectionHandler = (io: Server, socket: Socket) => {
+const ConnectionHandler = async (io: Server, socket: Socket) => {
   try {
     // @ts-ignore
     const currentUser = socket.request.user;
@@ -12,21 +12,17 @@ const ConnectionHandler = (io: Server, socket: Socket) => {
     socket.join(currentUser.email);
 
     const users = [];
-    let blockFromList: any[] = [];
-    let currenUserBlocks: any[] = [];
+    let blocked_by_user: any[] = [];
+    let my_blocked_users: any[] = [];
 
-    // blockFromList = await database('blocks').where('to', currentUser.email);
-    // currenUserBlocks = await database('blocks').where('from', currentUser.email);
-    blockFromList = blockFromList.map((each) => each.from);
-    currenUserBlocks = currenUserBlocks.map((each) => each.to);
-
+    blocked_by_user = await database('blocks').select('to').where('to', currentUser.email);
+    my_blocked_users = await database('blocks').select('from').where('from', currentUser.email);
     for (let [id, _socket] of io.of('/').sockets) {
       // @ts-ignore
       const user = _socket.request.user;
       if (currentUser.email === user.email) continue;
-      user.isBlocked = blockFromList.includes(user.email);
-      user.isBlockedByUser = currenUserBlocks.includes(user.email);
-
+      user.isBlocked = blocked_by_user.includes(user.email);
+      user.isBlockedByUser = my_blocked_users.includes(user.email);
       users.push(user);
     }
     console.log('active users -- ');

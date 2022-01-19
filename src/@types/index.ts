@@ -23,6 +23,7 @@ export enum MessageEvent {
 
 export enum UsersEvent {
   NEW_USER = 'USER:NEW_USER',
+  FETCH_USERS = 'USER:FETCH_USERS',
   ACTIVE_USERS = 'USER:ACTIVE_USERS',
   BLOCK_USER = 'USER:BLOCK_USER',
   UN_BLOCK_USER = 'USER:UN_BLOCK_USER',

@@ -3,7 +3,7 @@ import { MessageEvent, User } from '../@types';
 import { database } from '../database/db';
 
 const chatHandler = (io: Server, socket: Socket): void => {
-  const chatMessage = async (message: any, acknowlementFunc: Function) => {
+  const onCreateChat = async (message: any, acknowlementFunc: Function) => {
     try {
       const blockedByRecipientOrSender = await database('blocks')
         .where('from', message.to)
@@ -12,7 +12,8 @@ const chatHandler = (io: Server, socket: Socket): void => {
       if (blockedByRecipientOrSender.length > 1) return;
 
       let data = await database('messages').insert(message).returning('*');
-      // data = await database('messages').where({ id: data[0] });
+      data = await database('messages').where({ id: data[0] });
+      // disable for postgress
       if (data.length > 0) {
         socket.to(message.to).emit(MessageEvent.MESSAGE, data[0]);
         socket.broadcast.to(message.from).emit(MessageEvent.MESSAGE, data[0]);
@@ -23,7 +24,7 @@ const chatHandler = (io: Server, socket: Socket): void => {
     }
   };
 
-  const activeUserMessages = async (selectedUser: User) => {
+  const onFetchMessages = async (selectedUser: User) => {
     try {
       // @ts-ignore
       const currentUser = socket.request.user;
@@ -41,8 +42,8 @@ const chatHandler = (io: Server, socket: Socket): void => {
   //     socket.to(roomId).emit(ChatEvent.FINISHED_TYPING, socket.user);
   //   };
 
-  socket.on(MessageEvent.MESSAGE, chatMessage);
-  socket.on(MessageEvent.ACTIVE_USER_MESSAGES, activeUserMessages);
+  socket.on(MessageEvent.MESSAGE, onCreateChat);
+  socket.on(MessageEvent.ACTIVE_USER_MESSAGES, onFetchMessages);
   //   socket.on(ChatEvent.STARTED_TYPING, startedTyping);
   //   socket.on(ChatEvent.FINISHED_TYPING, finishedTyping);
 };
