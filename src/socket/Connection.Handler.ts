@@ -7,7 +7,7 @@ const ConnectionHandler = async (io: Server, socket: Socket) => {
     // @ts-ignore
     const currentUser = socket.request.user;
     console.log('new user connected -- ', currentUser.email);
-    socket.broadcast.emit(UsersEvent.NEW_USER, currentUser);
+    socket.broadcast.emit(UsersEvent.NEW_USER, {});
 
     socket.join(currentUser.email);
 
@@ -15,10 +15,12 @@ const ConnectionHandler = async (io: Server, socket: Socket) => {
 
     let blocked_by_user = await database('blocks').where('to', currentUser.email);
     let my_blocked_users = await database('blocks').where('from', currentUser.email);
-    blocked_by_user = blocked_by_user.map((user) => user.to);
-    my_blocked_users = my_blocked_users.map((user) => user.from);
+    blocked_by_user = blocked_by_user.map((user) => user.from);
+    my_blocked_users = my_blocked_users.map((user) => user.to);
 
     for (let [id, _socket] of io.of('/').sockets) {
+      // @ts-ignore
+      if (currentUser.email === _socket.request.user.email) continue;
       // @ts-ignore
       const user = _socket.request.user;
       if (currentUser.email === user.email) continue;
