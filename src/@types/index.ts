@@ -1,5 +1,3 @@
-import { SendMailOptions } from 'nodemailer';
-
 export enum ROLE {
   ADMINSTRATOR = 'ADMINSTRATOR',
   AUTHENTICATED = 'AUTHENTICATED',
@@ -36,4 +34,4 @@ export enum NotificationsEvent {
   NOTIFICATION = 'notifications:notification',
 }
 
-export type EmailOptions = Omit<SendMailOptions, 'from'>;
+export type EmailOptions = Omit<any, 'from'>;
