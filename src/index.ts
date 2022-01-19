@@ -11,7 +11,7 @@ import { env } from './helpers/env-helper';
 
 import { app } from './app';
 import { logger } from './helpers/logger';
-// import { pubClient, subClient } from './helpers/cache';
+import { pubClient, subClient } from './helpers/cache';
 import { ioMiddleware } from './middlewares/ioMiddleware';
 import ConnectionHandler from './socket/Connection.Handler';
 import chatHandler from './socket/Chat.Handler';
@@ -39,7 +39,7 @@ const adaptSocketToExpressMiddleWares = (middleware: Function) => (socket: Socke
 ConnectIo(server);
 function ConnectIo(server: any) {
   const io = new Server(server, {
-    // adapter: createAdapter(pubClient, subClient),
+    adapter: createAdapter(pubClient, subClient),
     cors: {
       origin: '*',
     },

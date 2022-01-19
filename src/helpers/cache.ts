@@ -19,5 +19,4 @@ export const get = client.get;
 const pubClient = client;
 const subClient = pubClient.duplicate();
 
-export { client };
 export { client, pubClient, subClient };
