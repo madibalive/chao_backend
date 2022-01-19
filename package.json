@@ -4,6 +4,7 @@
   "description": "NodeJS, Express typescript backend for chao-talk",
   "main": "build/app.js",
   "scripts": {
+    "heroku-postbuild": "npm run build",
     "build": "tsc",
     "start": "node build/index.js",
     "start:dev": "nodemon",
