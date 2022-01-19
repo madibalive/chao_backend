@@ -15,10 +15,9 @@ import ConnectionHandler from './socket/Connection.Handler';
 import chatHandler from './socket/Chat.Handler';
 import BlockHandler from './socket/Block.Handler';
 
-const HOST = env.string('SERVER_HOST', 'localhost');
-const PORT = env.number('SERVER_PORT', 4000);
+const PORT = process.env.PORT || 4000;
 
-const server = app.listen(PORT, HOST, () => {
+const server = app.listen(process.env.PORT, () => {
   logger.info(`🚀 Server is up and running at http://${HOST}:${PORT}`);
 });
 
