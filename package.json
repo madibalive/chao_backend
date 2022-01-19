@@ -5,8 +5,8 @@
   "main": "build/app.js",
   "scripts": {
     "build": "tsc",
-    "start:dev": "node build/index.js",
-    "start": "nodemon",
+    "start": "node build/index.js",
+    "start:dev": "nodemon",
     "start:dev-legacy": "nodemon -L",
     "knex": "./node_modules/.bin/knex --knexfile src/database/knexfile.ts",
     "knex:migrate": "./node_modules/.bin/knex --knexfile src/database/knexfile.ts migrate:latest",

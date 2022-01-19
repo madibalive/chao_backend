@@ -11,11 +11,14 @@ const ConnectionHandler = async (io: Server, socket: Socket) => {
   socket.join(currentUser.email);
 
   const users = [];
+  let blockFromList: any[] = [];
+  let currenUserBlocks: any[] = [];
 
-  let blockFromList = await database('blocks').where('to', currentUser.email);
+  try {
+    blockFromList = await database('blocks').where('to', currentUser.email);
+    currenUserBlocks = await database('blocks').where('from', currentUser.email);
+  } catch (error) {}
   blockFromList = blockFromList.map((each) => each.from);
-
-  let currenUserBlocks = await database('blocks').where('from', currentUser.email);
   currenUserBlocks = currenUserBlocks.map((each) => each.to);
 
   for (let [id, _socket] of io.of('/').sockets) {
@@ -44,7 +47,6 @@ const ConnectionHandler = async (io: Server, socket: Socket) => {
   };
 
   socket.on('disconnect', disconnect);
-  //   socket.on(ChatEvent.FINISHED_TYPING, finishedTyping);
 };
 
 export default ConnectionHandler;

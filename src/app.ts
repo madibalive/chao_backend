@@ -4,7 +4,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import { bootstrap } from './config/functions/bootstrap';
 
-// import { ErrorHandler } from './helpers/apiErrorHandler';
+import { ErrorHandler } from './helpers/apiErrorHandler';
 import { apiLogger } from './helpers/logger';
 
 const app = express();
@@ -27,7 +27,7 @@ app.use('/public', express.static('public/'));
 /*
  * Keep error-handler as last middleware
  */
-// app.use(ErrorHandler);
+app.use(ErrorHandler);
 
 // Bootstrap function runs before staring app
 bootstrap(app);

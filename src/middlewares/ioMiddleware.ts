@@ -9,11 +9,14 @@ const AUTH0_DOMAIN = env.string('AUTH0_DOMAIN', 'localhost');
 
 export const ioMiddleware = async (socket: Socket, next: SocketNextFunc) => {
   const bearerToken = socket.request.headers.authorization;
-  const { data } = await axios.get(`${AUTH0_DOMAIN}/userinfo`, {
+  try {
+    const { data } = await axios.get(`${AUTH0_DOMAIN}/userinfo`, {
+      // @ts-ignore
+      headers: { Authorization: bearerToken },
+    });
     // @ts-ignore
-    headers: { Authorization: bearerToken },
-  });
-  // @ts-ignore
-  socket.request.user = data;
+    socket.request.user = data;
+  } catch (error) {}
+
   next();
 };
