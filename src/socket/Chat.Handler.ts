@@ -12,7 +12,7 @@ const chatHandler = (io: Server, socket: Socket): void => {
       if (blockedByRecipientOrSender.length > 1) return;
 
       let data = await database('messages').insert(message).returning('*');
-      // data = await database('messages').where({ id: data[0] });
+      data = await database('messages').where({ id: data[0] });
       // disable for postgress
       if (data.length > 0) {
         socket.to(message.to).emit(MessageEvent.MESSAGE, data[0]);
