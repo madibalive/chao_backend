@@ -8,16 +8,14 @@ interface IKnexConfig {
 
 const configs: IKnexConfig = {
   development: {
-    development: {
-      client: 'sqlite3',
-      connection: {
-        filename: path.join(__dirname, 'db.sqlite3'),
-      },
-      migrations: {
-        tableName: 'knex_migrations',
-      },
-      useNullAsDefault: true,
+    client: 'sqlite3',
+    connection: {
+      filename: path.join(__dirname, 'db.sqlite3'),
     },
+    migrations: {
+      tableName: 'knex_migrations',
+    },
+    useNullAsDefault: true,
   },
   test: {
     client: 'postgresql',
@@ -37,16 +35,14 @@ const configs: IKnexConfig = {
     },
   },
   production: {
-    development: {
-      client: 'sqlite3',
-      connection: {
-        filename: path.join(__dirname, 'db.sqlite3'),
-      },
-      migrations: {
-        tableName: 'knex_migrations',
-      },
-      useNullAsDefault: true,
+    client: 'sqlite3',
+    connection: {
+      filename: path.join(__dirname, 'db.sqlite3'),
     },
+    migrations: {
+      tableName: 'knex_migrations',
+    },
+    useNullAsDefault: true,
   },
 };
 
