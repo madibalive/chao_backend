@@ -8,23 +8,37 @@ interface IKnexConfig {
 
 const configs: IKnexConfig = {
   development: {
-    client: 'sqlite3',
+    client: 'postgresql',
+    ssl: {
+      rejectUnauthorized: false,
+    },
     connection: {
-      filename: path.join(__dirname, 'db.sqlite3'),
+      ssl: {
+        rejectUnauthorized: false,
+      },
+      host: 'ec2-3-225-41-234.compute-1.amazonaws.com',
+      port: 5432,
+      database: 'd97ppci557sp5o',
+      user: 'nokjjuzwdavqlx',
+      password: '03414f761fa3b9567388a5554807cbcc3fa23edf90ece4f69b364cb92a3000a4      ',
+    },
+
+    pool: {
+      min: 2,
+      max: 10,
     },
     migrations: {
       tableName: 'knex_migrations',
     },
-    useNullAsDefault: true,
   },
   test: {
     client: 'postgresql',
     connection: {
-      host: process.env.DB_TEST_HOST || 'localhost',
-      port: process.env.DB_TEST_PORT || 5432,
-      database: process.env.DB_TEST_DATABASE || 'template_test',
-      user: process.env.DB_TEST_USER || 'postgres',
-      password: process.env.DB_TEST_PASS || 'root',
+      host: 'ec2-3-225-41-234.compute-1.amazonaws.com',
+      port: 5432,
+      database: 'd97ppci557sp5o',
+      user: 'nokjjuzwdavqlx',
+      password: '03414f761fa3b9567388a5554807cbcc3fa23edf90ece4f69b364cb92a3000a4      ',
     },
     pool: {
       min: 2,
@@ -35,14 +49,27 @@ const configs: IKnexConfig = {
     },
   },
   production: {
-    client: 'sqlite3',
+    client: 'postgresql',
+    ssl: {
+      rejectUnauthorized: false,
+    },
     connection: {
-      filename: path.join(__dirname, 'db.sqlite3'),
+      ssl: {
+        rejectUnauthorized: false,
+      },
+      host: 'ec2-3-225-41-234.compute-1.amazonaws.com',
+      port: 5432,
+      database: 'd97ppci557sp5o',
+      user: 'nokjjuzwdavqlx',
+      password: '03414f761fa3b9567388a5554807cbcc3fa23edf90ece4f69b364cb92a3000a4      ',
+    },
+    pool: {
+      min: 2,
+      max: 10,
     },
     migrations: {
       tableName: 'knex_migrations',
     },
-    useNullAsDefault: true,
   },
 };
 
