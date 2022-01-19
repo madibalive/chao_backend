@@ -4,7 +4,7 @@ import { ExtendedError } from 'socket.io/dist/namespace';
 
 type SocketNextFunc = (err?: ExtendedError | undefined) => void;
 
-const AUTH0_DOMAIN = process.env.AUTH0_DOMAIN || 'https://chaotalk.herokuapp.com/';
+const AUTH0_DOMAIN = process.env.AUTH0_DOMAIN || 'https://dev-tgdlv40g.us.auth0.com';
 
 export const ioMiddleware = async (socket: Socket, next: SocketNextFunc) => {
   const bearerToken = socket.request.headers.authorization;
