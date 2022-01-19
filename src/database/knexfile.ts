@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { Knex } from 'knex';
+const path = require('path');
 
 interface IKnexConfig {
   [key: string]: Knex.Config;
