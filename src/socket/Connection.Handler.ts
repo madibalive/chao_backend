@@ -12,11 +12,12 @@ const ConnectionHandler = async (io: Server, socket: Socket) => {
     socket.join(currentUser.email);
 
     const users = [];
-    let blocked_by_user: any[] = [];
-    let my_blocked_users: any[] = [];
 
-    blocked_by_user = await database('blocks').select('to').where('to', currentUser.email);
-    my_blocked_users = await database('blocks').select('from').where('from', currentUser.email);
+    let blocked_by_user = await database('blocks').where('to', currentUser.email);
+    let my_blocked_users = await database('blocks').where('from', currentUser.email);
+    blocked_by_user = blocked_by_user.map((user) => user.to);
+    my_blocked_users = my_blocked_users.map((user) => user.from);
+
     for (let [id, _socket] of io.of('/').sockets) {
       // @ts-ignore
       const user = _socket.request.user;

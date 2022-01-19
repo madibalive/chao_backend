@@ -44,8 +44,10 @@ const BlockHandler = (io: Server, socket: Socket): void => {
     // @ts-ignore
     const currentUser = socket.request.user;
     const users = [];
-    let blocked_by_user = await database('blocks').select('to').where('to', currentUser.email);
-    const my_blocked_users = await database('blocks').select('from').where('from', currentUser.email);
+    let blocked_by_user = await database('blocks').where('to', currentUser.email);
+    let my_blocked_users = await database('blocks').where('from', currentUser.email);
+    blocked_by_user = blocked_by_user.map((user) => user.to);
+    my_blocked_users = my_blocked_users.map((user) => user.from);
     for (let [id, _socket] of io.of('/').sockets) {
       // @ts-ignore
       const user = _socket.request.user;
