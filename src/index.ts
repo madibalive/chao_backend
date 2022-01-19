@@ -33,7 +33,9 @@ const server = http
   .listen(PORT)
   .once('listening', () => logger.info(`🚀 Server is up and running at http://${HOST}:${PORT}`));
 
-const adaptSocketToExpressMiddleWares = (middleware: Function) => (socket: Socket, next: SocketNextFunc) => middlew;
+const adaptSocketToExpressMiddleWares = (middleware: Function) => (socket: Socket, next: SocketNextFunc) =>
+  middleware(socket.request, {}, next);
+
 ConnectIo(server);
 function ConnectIo(server: any) {
   const io = new Server(server, {
