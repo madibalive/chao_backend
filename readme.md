@@ -1,6 +1,6 @@
-# TypeScript node starter
+# Chaotalk Backend Server TypeScript
 
-Purpose of this template is to get started in minutes with nodejs and typscript and all the workflow already setup red or very minimum configuration required\*
+Purpose of this project is to server as the backend for sample realtime chat application using socket io and node js \*
 
 ## Pre-reqs
 
@@ -13,10 +13,6 @@ To build and run this app locally you will need a few things:
 ## Getting started
 
 ### Clone the repository
-
-```bash
-git clone https://github.com/dhruvsaxena1998/node-express-typescript.git --branch <branch-name> <project-name>
-```
 
 ### Install dependencies
 
@@ -46,19 +42,6 @@ you will need to setup following variables to your `.env` file.
 | ------------- | ------------- | ----------------------------- |
 | `SERVER_HOST` | `localhost`   | host on which server will run |
 | `SERVER_PORT` | `5000`        | port on which server will run |
-
-- JWT
-
-| key           | default value                          | description                                          |
-| ------------- | -------------------------------------- | ---------------------------------------------------- |
-| `JWT_EXPIRES` | `30d`                                  | expiry for jwt-tokens, eg. `1d`, `10d`               |
-| `JWT_SECRET`  | `a606f398-51e9-4ba8-b8bb-02326f666bdf` | secret from which tokens will be signed and verified |
-
-```bash
-# you can use this command in cli to easily generate random base64 string
-# and use it as secret string or you can use any secret-string as per your wish.
-node -e "console.log(require('crypto').randomBytes(64).toString('base64'))"
-```
 
 - Database credentials
 
