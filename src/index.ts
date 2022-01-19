@@ -3,8 +3,8 @@ dotenv.config({
   path: './.env',
 });
 import { createAdapter } from '@socket.io/redis-adapter';
-import { Server } from 'socket.io';
-
+import { Server, Socket } from 'socket.io';
+import { ExtendedError } from 'socket.io/dist/namespace';
 import { env } from './helpers/env-helper';
 
 import { app } from './app';
@@ -14,6 +14,8 @@ import { ioMiddleware } from './middlewares/ioMiddleware';
 import ConnectionHandler from './socket/Connection.Handler';
 import chatHandler from './socket/Chat.Handler';
 import BlockHandler from './socket/Block.Handler';
+import { getAuthenticatedUserDetails } from './middlewares/get-authenticated-user-info copy';
+type SocketNextFunc = (err?: ExtendedError | undefined) => void;
 
 const PORT = process.env.PORT || 4000;
 
@@ -28,7 +30,12 @@ const io = new Server(server, {
   },
 });
 
-io.use(ioMiddleware);
+// io.use(ioMiddleware);
+
+const adaptSocketToExpressMiddleWares = (middleware: Function) => (socket: Socket, next: SocketNextFunc) =>
+  middleware(socket.request, {}, next);
+
+io.use(adaptSocketToExpressMiddleWares(getAuthenticatedUserDetails));
 
 io.on('connection', async function (socket) {
   await ConnectionHandler(io, socket);
