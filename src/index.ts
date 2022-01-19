@@ -5,6 +5,7 @@ dotenv.config({
 import { createAdapter } from '@socket.io/redis-adapter';
 import { Server, Socket } from 'socket.io';
 import { ExtendedError } from 'socket.io/dist/namespace';
+
 import { env } from './helpers/env-helper';
 
 import { app } from './app';
@@ -14,13 +15,16 @@ import { ioMiddleware } from './middlewares/ioMiddleware';
 import ConnectionHandler from './socket/Connection.Handler';
 import chatHandler from './socket/Chat.Handler';
 import BlockHandler from './socket/Block.Handler';
-import { getAuthenticatedUserDetails } from './middlewares/get-authenticated-user-info copy';
+import { Axios } from 'axios';
+
 type SocketNextFunc = (err?: ExtendedError | undefined) => void;
 
+const HOST = env.string('SERVER_HOST', 'localhost');
+// const PORT = env.number('SERVER_PORT', 5000);
 const PORT = process.env.PORT || 4000;
 
-const server = app.listen(process.env.PORT, () => {
-  logger.info(`🚀 Server is up and running at http://${PORT}`);
+const server = app.listen(PORT as number, HOST, () => {
+  logger.info(`🚀 Server is up and running at http://${HOST}:${PORT}`);
 });
 
 const io = new Server(server, {
@@ -30,19 +34,10 @@ const io = new Server(server, {
   },
 });
 
-// io.use(ioMiddleware);
-
-const adaptSocketToExpressMiddleWares = (middleware: Function) => (socket: Socket, next: SocketNextFunc) =>
-  middleware(socket.request, {}, next);
-
-io.use(adaptSocketToExpressMiddleWares(getAuthenticatedUserDetails));
+io.use(ioMiddleware);
 
 io.on('connection', async function (socket) {
-  try {
-    await ConnectionHandler(io, socket);
-    chatHandler(io, socket);
-    BlockHandler(io, socket);
-  } catch (error) {
-    console.log(error);
-  }
+  await ConnectionHandler(io, socket);
+  chatHandler(io, socket);
+  BlockHandler(io, socket);
 });
