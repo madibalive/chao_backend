@@ -42,7 +42,9 @@ const configs: IKnexConfig = {
   },
   production: {
     client: 'postgresql',
-    connection: process.env.DATABSE_URL || 'postgres://postgres:root@localhost:5432/template',
+    connection:
+      process.env.DATABASE_URL ||
+      'postgres://nokjjuzwdavqlx:03414f761fa3b9567388a5554807cbcc3fa23edf90ece4f69b364cb92a3000a4@ec2-3-225-41-234.compute-1.amazonaws.com:5432/d97ppci557sp5o',
     pool: {
       min: 2,
       max: 10,
